@@ -2,31 +2,32 @@
 
 cd velocity
 
-MC_VERSION=${1:-latest}
-VELOCITY_BUILD=${2:-latest}
-MC_RAM=${3:-1G}
+VERSION=${VERSION:-latest}
+BUILD=${BUILD:-latest}
+MIN_RAM=${MIN_RAM:-256M}
+MAX_RAM=${MAX_RAM:-1G}
 
 
 # Perform initial setup
 URL_PREFIX=https://papermc.io/api/v2/projects/velocity
-if [ ${MC_VERSION} = latest ]
+if [ ${VERSION} = latest ]
   then
     # Get the latest MC version
-    MC_VERSION=$(wget -qO - $URL_PREFIX | jq -r '.versions[-1]') # "-r" is needed because the output has quotes otherwise
+    VERSION=$(wget -qO - $URL_PREFIX | jq -r '.versions[-1]') # "-r" is needed because the output has quotes otherwise
 fi
-URL_PREFIX=${URL_PREFIX}/versions/${MC_VERSION}
-if [ ${VELOCITY_BUILD} = latest ]
+URL_PREFIX=${URL_PREFIX}/versions/${VERSION}
+if [ ${BUILD} = latest ]
   then
     # Get the latest build
-    VELOCITY_BUILD=$(wget -qO - $URL_PREFIX | jq '.builds[-1]')
+    BUILD=$(wget -qO - $URL_PREFIX | jq '.builds[-1]')
 fi
 
-JAR_NAME=velocity-${MC_VERSION}-${VELOCITY_BUILD}.jar
+JAR_NAME=velocity-${VERSION}-${BUILD}.jar
 
 if [ ! -e ${JAR_NAME} ]
   then
     rm -f *.jar
-    wget ${URL_PREFIX}/builds/${VELOCITY_BUILD}/downloads/velocity-${MC_VERSION}-${VELOCITY_BUILD}.jar -O ${JAR_NAME}
+    wget ${URL_PREFIX}/builds/${BUILD}/downloads/velocity-${VERSION}-${BUILD}.jar -O ${JAR_NAME}
     if [ ! -e eula.txt ]
     then
       java -jar ${JAR_NAME}
@@ -35,4 +36,4 @@ if [ ! -e ${JAR_NAME} ]
 fi
 
 # Start server
-exec java -server -Xms${MC_RAM} -Xmx${MC_RAM} ${JAVA_OPTS} -jar ${JAR_NAME} nogui
+exec java -server -Xms${MIN_RAM} -Xmx${MAX_RAM} ${JAVA_OPTS} -jar ${JAR_NAME} nogui
