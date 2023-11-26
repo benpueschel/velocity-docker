@@ -7,8 +7,8 @@ RUN apt update \
 	&& mkdir /velocity
 
 # Container setup
-EXPOSE 25565/tcp
-EXPOSE 25565/udp
+EXPOSE 25577/tcp
+EXPOSE 25577/udp
 
 COPY start.sh /
 
