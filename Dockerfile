@@ -1,17 +1,25 @@
-FROM openjdk:11.0-jre-slim
+FROM alpine:latest
 
-RUN apt update \
-	&& apt install -y wget \
-	&& apt install -y jq \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& mkdir /velocity
+RUN apk update && \
+	apk add jq bash openjdk21-jre wget
+
+# Create a non-priviliged user and set the working directory to their home
+RUN adduser -D -S -h /home/minecraft minecraft
+WORKDIR /home/minecraft
+RUN mkdir velocity
+RUN chown minecraft velocity
+
+# Copy the start script and make it executable
+COPY start.sh ./
+RUN chown minecraft start.sh
+RUN chmod +x start.sh
 
 # Container setup
 EXPOSE 25577/tcp
 EXPOSE 25577/udp
 
-COPY start.sh /
+COPY start.sh ./
 
 RUN chmod +x start.sh
 
-ENTRYPOINT [ "/start.sh" ]
+ENTRYPOINT [ "./start.sh" ]
