@@ -5,18 +5,14 @@ Velocity is a minecraft proxy server, used to connect multiple game servers toge
 
 To find out more about Velocity visit https://papermc.io/software/velocity or https://github.com/PaperMC/Velocity
 
-## Usage
+## Quick Start
 
-Build with:
+The image is available on GitHub Container Registry as `ghcr.io/benpueschel/velocity-docker:main`.
+To automatically pull the image and run a container, use:
 ```sh
-docker build -t my-velocity-image .
-```
-
-Run with:
-```sh
-docker run -p 25565:25577 -d --rm --name my-velocity-server \
+docker run -p 25565:25577 -dit --rm --name my-velocity-server \
 -v my-velocity-volume:/home/minecraft/velocity \
-my-velocity-image
+ghcr.io/benpueschel/velocity-docker:main
 ```
 
 Container uses the following environment variables:
@@ -25,3 +21,22 @@ Container uses the following environment variables:
 - `MIN_RAM`: jvm min heap size (-Xms). Defaults to `256M`
 - `MAX_RAM`: jvm max heap size (-Xmx). Defaults to `1G`
 - `JAVA_OPTS`: extra options to be passed to the jvm. optional
+
+## Manual Build
+
+First, clone the repository:
+```sh
+git clone https://github.com/benpueschel/velocity-docker.git && cd velocity-docker
+```
+
+Then build the image with:
+```sh
+docker build -t my-velocity-image .
+```
+
+Finally, run the container with the custom image:
+```sh
+docker run -p 25565:25577 -d --rm --name my-velocity-server \
+-v my-velocity-volume:/home/minecraft/velocity \
+my-velocity-image
+```
