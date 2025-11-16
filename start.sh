@@ -13,7 +13,7 @@ URL_PREFIX=https://fill.papermc.io/v3/projects/velocity
 if [ ${VERSION} = latest ]
   then
     # Get the latest MC version
-	VERSION=$(wget -qO - $URL_PREFIX | jq -r '.versions[ (.versions | keys_unsorted) ] | first')
+	VERSION=$(wget -qO - $URL_PREFIX | jq -r '.versions[ (.versions | keys_unsorted | first) ] | first')
 fi
 URL_PREFIX=${URL_PREFIX}/versions/${VERSION}
 if [ ${BUILD} = latest ]
