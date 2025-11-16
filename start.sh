@@ -9,17 +9,17 @@ MAX_RAM=${MAX_RAM:-1G}
 
 
 # Perform initial setup
-URL_PREFIX=https://papermc.io/api/v2/projects/velocity
+URL_PREFIX=https://fill.papermc.io/v3/projects/velocity
 if [ ${VERSION} = latest ]
   then
     # Get the latest MC version
-    VERSION=$(wget -qO - $URL_PREFIX | jq -r '.versions[-1]') # "-r" is needed because the output has quotes otherwise
+	VERSION=$(wget -qO - $URL_PREFIX | jq -r '.versions[ (.versions | keys | reverse | first) ] | first')
 fi
 URL_PREFIX=${URL_PREFIX}/versions/${VERSION}
 if [ ${BUILD} = latest ]
   then
     # Get the latest build
-    BUILD=$(wget -qO - $URL_PREFIX | jq '.builds[-1]')
+    BUILD=$(wget -qO - $URL_PREFIX/builds/latest | jq -r '.id')
 fi
 
 JAR_NAME=velocity-${VERSION}-${BUILD}.jar
@@ -27,12 +27,8 @@ JAR_NAME=velocity-${VERSION}-${BUILD}.jar
 if [ ! -e ${JAR_NAME} ]
   then
     rm -f *.jar
-    wget ${URL_PREFIX}/builds/${BUILD}/downloads/velocity-${VERSION}-${BUILD}.jar -O ${JAR_NAME}
-    if [ ! -e eula.txt ]
-    then
-      java -jar ${JAR_NAME}
-      sed -i 's/false/true/g' eula.txt
-    fi
+	DOWNLOAD_URL=$(wget -qO - $URL_PREFIX/builds/${BUILD} | jq -r '.downloads."server:default".url')
+    wget ${DOWNLOAD_URL} -O ${JAR_NAME}
 fi
 
 # Start server
