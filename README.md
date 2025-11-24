@@ -20,7 +20,7 @@ Container uses the following environment variables:
 - `BUILD`: target build. defaults to `latest`
 - `MIN_RAM`: jvm min heap size (-Xms). Defaults to `256M`
 - `MAX_RAM`: jvm max heap size (-Xmx). Defaults to `1G`
-- `JAVA_OPTS`: extra options to be passed to the jvm. optional
+- `JAVA_OPTS`: extra options to be passed to the jvm. Defaults to [Velocity's recommended flags](https://docs.papermc.io/velocity/tuning/).
 
 ## Manual Build
 

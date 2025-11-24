@@ -6,6 +6,7 @@ VERSION=${VERSION:-latest}
 BUILD=${BUILD:-latest}
 MIN_RAM=${MIN_RAM:-256M}
 MAX_RAM=${MAX_RAM:-1G}
+JAVA_OPTS=${JAVA_OPTS:-"-XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15"}
 
 
 # Perform initial setup
