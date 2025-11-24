@@ -31,5 +31,8 @@ if [ ! -e ${JAR_NAME} ]
     wget ${DOWNLOAD_URL} -O ${JAR_NAME}
 fi
 
+# Execute user command
+exec "$@"
+
 # Start server
 exec java -server -Xms${MIN_RAM} -Xmx${MAX_RAM} ${JAVA_OPTS} -jar ${JAR_NAME} nogui

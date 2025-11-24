@@ -1,7 +1,8 @@
 FROM alpine:latest
 
 RUN apk update && \
-	apk add jq bash openjdk21-jre wget
+	apk add jq bash openjdk21-jre wget && \
+	apk add gettext
 
 # Create a non-priviliged user and set the working directory to their home
 RUN adduser -D -S -h /home/minecraft minecraft
