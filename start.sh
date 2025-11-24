@@ -32,7 +32,11 @@ if [ ! -e ${JAR_NAME} ]
 fi
 
 # Execute user command
-exec "$@"
+"$@"
+
+if [ $? -ne 0 ]; then
+	exit $?
+fi
 
 # Start server
 exec java -server -Xms${MIN_RAM} -Xmx${MAX_RAM} ${JAVA_OPTS} -jar ${JAR_NAME} nogui
