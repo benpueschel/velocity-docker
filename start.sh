@@ -33,7 +33,7 @@ if [ ! -e ${JAR_NAME} ]
 fi
 
 # Execute user command
-"$@"
+sh -c "$@"
 
 if [ $? -ne 0 ]; then
 	exit $?
