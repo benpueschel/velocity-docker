@@ -7,12 +7,13 @@ To find out more about Velocity visit https://papermc.io/software/velocity or ht
 
 ## Quick Start
 
-The image is available on GitHub Container Registry as `ghcr.io/benpueschel/velocity-docker:main`.
+The image is available on Docker Hub as `benpueschel/velocity` and on the
+GitHub Container Registry as `ghcr.io/benpueschel/velocity-docker:main`.
 To automatically pull the image and run a container, use:
 ```sh
-docker run -p 25565:25577 -dit --rm --name my-velocity-server \
+docker run -p 25565:25565 -dit --rm --name my-velocity-server \
 -v my-velocity-volume:/home/minecraft/velocity \
-ghcr.io/benpueschel/velocity-docker:main
+benpueschel/velocity
 ```
 
 Container uses the following environment variables:
@@ -36,7 +37,7 @@ docker build -t my-velocity-image .
 
 Finally, run the container with the custom image:
 ```sh
-docker run -p 25565:25577 -d --rm --name my-velocity-server \
+docker run -p 25565:25565 -d --rm --name my-velocity-server \
 -v my-velocity-volume:/home/minecraft/velocity \
 my-velocity-image
 ```

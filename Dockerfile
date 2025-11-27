@@ -16,8 +16,8 @@ RUN chown minecraft start.sh
 RUN chmod +x start.sh
 
 # Container setup
-EXPOSE 25577/tcp
-EXPOSE 25577/udp
+EXPOSE 25565/tcp
+EXPOSE 25565/udp
 
 COPY start.sh ./
 
