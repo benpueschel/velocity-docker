@@ -33,10 +33,11 @@ if [ ! -e ${JAR_NAME} ]
 fi
 
 # Execute user command
-[ $# -gt 0 ] && sh -c "$1" _ "$@"
-
-if [ $? -ne 0 ]; then
-	exit $?
+if [ $# -gt 0 ]; then
+	sh -c "$1" _ "$@"
+	if [ $? -ne 0 ]; then
+		exit $?
+	fi
 fi
 
 # Start server
